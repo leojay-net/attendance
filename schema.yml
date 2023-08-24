@@ -1,0 +1,506 @@
+openapi: 3.0.3
+info:
+  title: ATTENDANCE-API
+  version: 1.0.0
+  description: Take your Attendance with ease
+paths:
+  /v1/api/attendance/delete/{id}:
+    delete:
+      operationId: v1_api_attendance_delete_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /v1/api/attendance/get/{id}:
+    get:
+      operationId: v1_api_attendance_get_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+  /v1/api/attendance/update/{id}:
+    put:
+      operationId: v1_api_attendance_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+    patch:
+      operationId: v1_api_attendance_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceSerializersRequest'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+  /v1/api/attendances:
+    get:
+      operationId: v1_api_attendances_list
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+  /v1/api/create_attendance:
+    post:
+      operationId: v1_api_create_attendance_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttendanceSerializersRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceSerializers'
+          description: ''
+  /v1/api/create_user:
+    post:
+      operationId: v1_api_create_user_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+  /v1/api/user/delete/{id}:
+    delete:
+      operationId: v1_api_user_delete_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /v1/api/user/get/{id}:
+    get:
+      operationId: v1_api_user_get_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+  /v1/api/user/update/{id}:
+    put:
+      operationId: v1_api_user_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserSerializersRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+    patch:
+      operationId: v1_api_user_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializersRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializersRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSerializersRequest'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSerializers'
+          description: ''
+  /v1/api/users:
+    get:
+      operationId: v1_api_users_list
+      parameters:
+      - in: query
+        name: occupation
+        schema:
+          type: string
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserSerializers'
+          description: ''
+components:
+  schemas:
+    AttendanceSerializers:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        full_name:
+          type: string
+          maxLength: 100
+        title:
+          type: string
+          maxLength: 100
+        subject:
+          type: string
+          maxLength: 100
+        attenders_id:
+          type: string
+          maxLength: 100
+        user:
+          type: string
+          readOnly: true
+        creators_id:
+          type: string
+          readOnly: true
+        date_created:
+          type: string
+          format: date
+          readOnly: true
+        date_updated:
+          type: string
+          format: date
+          readOnly: true
+          title: Date_created
+      required:
+      - attenders_id
+      - creators_id
+      - date_created
+      - date_updated
+      - full_name
+      - id
+      - subject
+      - title
+      - user
+    AttendanceSerializersRequest:
+      type: object
+      properties:
+        full_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 100
+        attenders_id:
+          type: string
+          minLength: 1
+          maxLength: 100
+      required:
+      - attenders_id
+      - full_name
+      - subject
+      - title
+    PatchedAttendanceSerializersRequest:
+      type: object
+      properties:
+        full_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 100
+        attenders_id:
+          type: string
+          minLength: 1
+          maxLength: 100
+    PatchedUserSerializersRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        username:
+          type: string
+          minLength: 1
+          maxLength: 50
+        email:
+          type: string
+          minLength: 1
+          maxLength: 100
+        occupation:
+          type: string
+          minLength: 1
+          maxLength: 50
+    UserSerializers:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        username:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          maxLength: 100
+        creators_id:
+          type: string
+          readOnly: true
+        occupation:
+          type: string
+          maxLength: 50
+        date_created:
+          type: string
+          format: date
+          readOnly: true
+        date_updated:
+          type: string
+          format: date
+          readOnly: true
+          title: Date_created
+      required:
+      - creators_id
+      - date_created
+      - date_updated
+      - email
+      - first_name
+      - id
+      - last_name
+      - occupation
+      - username
+    UserSerializersRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        username:
+          type: string
+          minLength: 1
+          maxLength: 50
+        email:
+          type: string
+          minLength: 1
+          maxLength: 100
+        occupation:
+          type: string
+          minLength: 1
+          maxLength: 50
+      required:
+      - email
+      - first_name
+      - last_name
+      - occupation
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
