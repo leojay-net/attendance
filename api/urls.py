@@ -8,7 +8,7 @@ from .views import (CreateAttendance, CreateUser, GetAllAttendance,
 urlpatterns = [
     path("create_user", CreateUser.as_view(), name="create-user"),
     path("users", GetAllUsers.as_view(), name="users"),
-    path("user/get/<str:phone_number>", GetUser.as_view(), name="user"),
+    path("user/get/<str:pk>", GetUser.as_view(), name="user"),
     path("user/update/<str:pk>", UpdateUser.as_view(), name="update-user"),
     path("user/delete/<str:pk>", DeleteUser.as_view(), name="delete-user"),
     #attendance

@@ -13,6 +13,8 @@ class UserSerializers(serializers.ModelSerializer):
         fields = ["id", "first_name", "last_name", "username", "email", "phone_number", "courses", "creators_id", "occupation", "date_created", "date_updated"]
     def create(self, validated_data):
         request = self.context.get('request')
+        id = validated_data["phone_number"]
+        validated_data["id"] = id
         creators_id = f'Attendance-ID_?code={validated_data["username"]}'
         validated_data["creators_id"] = creators_id
         user = User.objects.create(**validated_data)
