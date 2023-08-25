@@ -10,7 +10,7 @@ class UserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "username", "email", "creators_id", "occupation", "date_created", "date_updated"]
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_number", "courses", "creators_id", "occupation", "date_created", "date_updated"]
     def create(self, validated_data):
         request = self.context.get('request')
         creators_id = f'Attendance-ID_?code={validated_data["username"]}'
