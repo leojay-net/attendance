@@ -95,10 +95,10 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Take your Attendance with ease',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SWAGGER_UI_DIST': 'SIDECAR',  
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    'REDOC_DIST': 'SIDECAR',
-    'COMPONENT_SPLIT_REQUEST':True,
+    #'SWAGGER_UI_DIST': 'SIDECAR',  
+    #'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    #'REDOC_DIST': 'SIDECAR',
+    #'COMPONENT_SPLIT_REQUEST':True,
 }
 
 
@@ -167,7 +167,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 
 # Media cofiguration
 
