@@ -34,6 +34,14 @@ class GetUser(RetrieveAPIView):
     serializer_class = UserSerializers
     queryset = User.objects.all()
 
+    def get(self, request, phone_number):
+        try:
+            instance = User.objects.get(phone_number = phone_number)
+            return Response( instance
+            )
+        except Exception as e:
+            return Response({"info": e.args})
+                
 
 class UpdateUser(UpdateAPIView):
     queryset = User.objects.all()
