@@ -29,7 +29,7 @@ class AttendanceSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Attendance
-        fields = ["id", "full_name", "title", "subject", "attenders_id", "user", "creators_id", "date_created", "date_updated"]
+        fields = ["id", "subject", "attenders_id", "user", "creators_id", "date_created", "date_updated"]
         
         
     def create(self, validated_data):
