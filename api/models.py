@@ -31,8 +31,6 @@ class Attendance(models.Model):
     id = models.CharField(max_length=64, default=generate_id, unique=True, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     creators_id = models.CharField(max_length=100)
-    full_name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
     subject = models.CharField(max_length=100)
     attenders_id = models.CharField(max_length=100)
     date_created = models.DateField(default=timezone.now)
