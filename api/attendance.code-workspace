@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../app"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "attendance"
+	}
+}

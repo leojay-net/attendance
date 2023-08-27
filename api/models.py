@@ -2,6 +2,12 @@ from django.db import models
 import uuid
 from django.utils import timezone
 # Create your models here.
+
+def generate_id():
+    id = uuid.uuid4()
+    return str(id).replace("-", "")
+
+
 class User(models.Model):
     id = models.CharField(max_length=10, unique=True, primary_key=True)
     username = models.CharField(max_length=50, unique=True)
@@ -22,7 +28,7 @@ class User(models.Model):
         ordering = ["-date_updated"]
 
 class Attendance(models.Model):
-    id = models.CharField(max_length=64, default=str(uuid.uuid4()).replace("-", ""), unique=True, primary_key=True)
+    id = models.CharField(max_length=64, default=generate_id, unique=True, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     creators_id = models.CharField(max_length=100)
     full_name = models.CharField(max_length=100)
