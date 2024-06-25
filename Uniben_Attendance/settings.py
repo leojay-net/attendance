@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     # third-party apps
 
     'rest_framework',
-    'rest_framework_simplejwt',
+    #'rest_framework_simplejwt',
     'corsheaders',
-    'background_task',
+    #'background_task',
     #'django_seed',
     #'coreapi', # core api documentation
     'drf_spectacular', # drf api documentation
@@ -117,10 +117,10 @@ DATABASES = {
 
     'default': {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "paywayve",
-            "USER": "leo",
-            "PASSWORD": "3jpUyVUDc7FU1XkBME191irIEtmuHzxi",
-            "HOST": "dpg-cjjk0avjbvhs73dgc6eg-a.oregon-postgres.render.com",
+            "NAME": "paywavee",
+            "USER": "paywavee_user",
+            "PASSWORD": "jFK0JJruxnNIbbmKEipFWiC3kRt6UdTM",
+            "HOST": "dpg-cptemmdumphs73c2l6a0-a.oregon-postgres.render.com",
             "PORT": "5432"
                 
             } 
