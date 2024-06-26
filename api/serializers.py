@@ -6,7 +6,6 @@ class UserSerializers(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     date_created = serializers.ReadOnlyField()
     date_updated = serializers.ReadOnlyField()
-    creators_id = serializers.ReadOnlyField()
 
     class Meta:
         model = User
