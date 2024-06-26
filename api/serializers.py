@@ -10,19 +10,20 @@ class UserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "username", "email", "phone_number", "courses", "creators_id", "occupation", "date_created", "date_updated"]
+        fields = ["id", "first_name", "last_name", "username", "email", "phone_number", "courses", "occupation", "date_created", "date_updated"]
     def create(self, validated_data):
         request = self.context.get('request')
         id = validated_data["phone_number"]
         validated_data["id"] = id
-        creators_id = f'Attendance-ID_?code={validated_data["username"]}'
-        validated_data["creators_id"] = creators_id
+        #creators_id = f'Attendance-ID_?code={validated_data["username"]}'
+        #validated_data["creators_id"] = creators_id
         user = User.objects.create(**validated_data)
         return user
     
 class AttendanceSerializers(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     user = UserSerializers(read_only=True)
+    
     # creators_id = serializers.ReadOnlyField()
     date_created = serializers.ReadOnlyField()
     date_updated = serializers.ReadOnlyField()
@@ -34,9 +35,9 @@ class AttendanceSerializers(serializers.ModelSerializer):
         
     def create(self, validated_data):
         request = self.context.get('request')
-        username = validated_data["creators_id"].replace("Attendance-ID_?code=", "")
-        print(username)
-        user = User.objects.get(username=username)
+        #username = validated_data["creators_id"].replace("Attendance-ID_?code=", "")
+        id = validated_data["creators_id"]
+        user = User.objects.get(id=id)
         # validated_data["user"] = user
         attendance = Attendance.objects.create(user=user, **validated_data)
         return attendance
