@@ -26,11 +26,26 @@ class User(models.Model):
     class Meta:
         ordering = ["-date_updated"]
 
+
+class Course(models.Model):
+    id = models.IntegerField(max_length=10, default=0, unique=True, primary_key=True)
+    course_code = models.CharField(max_length=100)
+    date_created = models.DateField(default=timezone.now)
+    date_updated = models.DateField('date_created', auto_now=True)
+
+
+
+    def __str__(self):
+        return str(self.course_code)
+    
+    class Meta:
+        ordering = ["-date_updated"]
+
 class Attendance(models.Model):
     id = models.CharField(max_length=64, default=generate_id, unique=True, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     creators_id = models.CharField(max_length=10)
-    subject = models.CharField(max_length=100)
     attenders_id = models.CharField(max_length=100)
     date_created = models.DateField(default=timezone.now)
     date_updated = models.DateField('date_created', auto_now=True)
@@ -42,7 +57,4 @@ class Attendance(models.Model):
     
     class Meta:
         ordering = ["-date_updated"]
-
-
-
 

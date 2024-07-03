@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import UserSerializers, AttendanceSerializers
-from .models import User, Attendance
+from .serializers import UserSerializers, AttendanceSerializers, CourseSerializers
+from .models import User, Attendance, Course
 
 # Create your views here.
 class CreateUser(CreateAPIView):
@@ -139,6 +139,83 @@ class UpdateAttendance(UpdateAPIView):
 class DeleteAttendance(GenericAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
+    def delete(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            instance.delete()
+            return Response({
+                    "info": "Object_Project deleted"
+                }
+            )
+        except Exception as e:
+            return Response({"info": e.args})
+        
+
+
+
+class CreateCourse(CreateAPIView):
+    serializer_class = CourseSerializers
+    queryset = Course.objects.all()
+
+    def post(self, request, format=None):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data={"msg": serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+
+class GetAllCourses(ListAPIView):
+    serializer_class = CourseSerializers
+    def get_queryset(self):
+        querys = Course.objects.all()
+        if self.request.GET.get('id') == None and self.request.GET.get('course_code') == None:
+            return querys
+        elif self.request.GET.get('id') != None and self.request.GET.get('course_code') != None:
+            id = self.request.GET.get('id')
+            course_code = self.request.GET.get('course_code')
+            querys = querys.filter(id=id, course_code=course_code)
+            return querys
+        elif self.request.GET.get('id') == None and self.request.GET.get('course_code') != None:
+            course_code = self.request.GET.get('course_code')
+            querys = querys.filter(course_code=course_code)
+            return querys
+        elif self.request.GET.get('id') != None and self.request.GET.get('course_code') == None:
+            id = self.request.GET.get('id')
+            querys = querys.filter(id=id)
+            return querys
+        else:
+            return []
+
+
+        
+
+
+class GetCourses(RetrieveAPIView):
+    serializer_class = CourseSerializers
+    queryset = Course.objects.all()
+
+
+class UpdateCourse(UpdateAPIView):
+    serializer_class = CourseSerializers
+    queryset = Course.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+        
+
+class DeleteCourse(GenericAPIView):
+    serializer_class = CourseSerializers
+    queryset = Course.objects.all()
     def delete(self, request, *args, **kwargs):
         try:
             instance = self.get_object()

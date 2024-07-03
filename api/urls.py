@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (CreateAttendance, CreateUser, GetAllAttendance, 
                     GetAllUsers, GetAttendance, GetUser, UpdateAttendance, 
-                    UpdateUser, DeleteUser, DeleteAttendance)
+                    UpdateUser, DeleteUser, DeleteAttendance, CreateCourse, UpdateCourse, GetAllCourses, GetCourses, DeleteCourse)
 
 # app_name = 'api'
 
@@ -17,4 +17,11 @@ urlpatterns = [
     path("attendance/get/<str:pk>", GetAttendance.as_view(), name="attendance"),
     path("attendance/update/<str:pk>", UpdateAttendance.as_view(), name="update-attendance"),
     path("attendance/delete/<str:pk>", DeleteAttendance.as_view(), name="delete-attendance"),
+
+    #Courses
+    path("create_course", CreateCourse.as_view(), name="create-course"),
+    path("courses", GetAllCourses.as_view(), name="courses"),
+    path("course/get/<str:pk>", GetCourses.as_view(), name="course"),
+    path("course/update/<str:pk>", UpdateCourse.as_view(), name="update-course"),
+    path("course/delete/<str:pk>", DeleteCourse.as_view(), name="delete-course"),
 ]
