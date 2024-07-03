@@ -43,9 +43,9 @@ class Course(models.Model):
 
 class Attendance(models.Model):
     id = models.CharField(max_length=64, default=generate_id, unique=True, primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
-    creators_id = models.CharField(max_length=10)
+    #creators_id = models.CharField(max_length=10)
     attenders_id = models.CharField(max_length=100)
     date_created = models.DateField(default=timezone.now)
     date_updated = models.DateField('date_created', auto_now=True)
@@ -53,7 +53,7 @@ class Attendance(models.Model):
 
 
     def __str__(self):
-        return str(self.user.username)
+        return str(self.course.course_code)
     
     class Meta:
         ordering = ["-date_updated"]
