@@ -29,7 +29,7 @@ class User(models.Model):
 
 class Course(models.Model):
     id = models.IntegerField(max_length=10, default=0, unique=True, primary_key=True)
-    course_code = models.CharField(max_length=100)
+    course_code = models.CharField(max_length=100, unique=True)
     date_created = models.DateField(default=timezone.now)
     date_updated = models.DateField('date_created', auto_now=True)
 
