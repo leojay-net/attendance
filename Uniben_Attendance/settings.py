@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 import logging
+from decouple import config
 
 logger = logging.getLogger('django')
 logger.setLevel(logging.DEBUG)
@@ -89,12 +90,12 @@ TEMPLATES = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'paywavee@gmail.com'
-EMAIL_HOST_PASSWORD = 'wcuz gfpa zrhk bqer'
+EMAIL_USE_TLS = config("EMAIL_USE_TLS")
+EMAIL_USE_SSL = config("EMAIL_USE_SSL")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 10
 
