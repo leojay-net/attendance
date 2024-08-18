@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+import logging
 
-
+logger = logging.getLogger('django')
+logger.setLevel(logging.DEBUG)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,18 +44,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # apps
-
     'api.apps.ApiConfig',
+    'UserAuth.apps.UserAuthConfig',
 
 
     # third-party apps
 
     'rest_framework',
-    #'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
     'corsheaders',
     #'background_task',
     #'django_seed',
-    #'coreapi', # core api documentation
     'drf_spectacular', # drf api documentation
     'drf_spectacular_sidecar',
     'django_filters',
@@ -73,7 +75,7 @@ ROOT_URLCONF = 'Uniben_Attendance.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,9 +88,60 @@ TEMPLATES = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'paywavee@gmail.com'
+EMAIL_HOST_PASSWORD = 'wcuz gfpa zrhk bqer'
+
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 10
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication', 'rest_framework.authentication.SessionAuthentication'],
 }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+
+    "JTI_CLAIM": "jti",
+
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ATTENDANCE-API',
@@ -110,20 +163,20 @@ WSGI_APPLICATION = 'Uniben_Attendance.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
     'default': {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "paywavee",
-            "USER": "paywavee_user",
-            "PASSWORD": "jFK0JJruxnNIbbmKEipFWiC3kRt6UdTM",
-            "HOST": "dpg-cptemmdumphs73c2l6a0-a.oregon-postgres.render.com",
-            "PORT": "5432"
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+
+    # 'default': {
+    #         "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #         "NAME": "paywavee",
+    #         "USER": "paywavee_user",
+    #         "PASSWORD": "jFK0JJruxnNIbbmKEipFWiC3kRt6UdTM",
+    #         "HOST": "dpg-cptemmdumphs73c2l6a0-a.oregon-postgres.render.com",
+    #         "PORT": "5432"
                 
-            } 
+    #         } 
 }
 
 
@@ -166,8 +219,8 @@ USE_TZ = True
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 
 # Media cofiguration
 
@@ -180,3 +233,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'adminpage.CustomUser'
 CORS_ALLOW_ALL_ORIGINS = True
+AUTH_USER_MODEL= 'UserAuth.CustomUser'

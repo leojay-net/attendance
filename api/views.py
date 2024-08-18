@@ -8,7 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import UserSerializers, AttendanceSerializers, CourseSerializers
 from .models import User, Attendance, Course
 
-# Create your views here.
+
 class CreateUser(CreateAPIView):
     serializer_class = UserSerializers
     queryset = User.objects.all()
